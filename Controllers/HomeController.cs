@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using stackoverblow.Models;
 using StackOverblow.Models;
 
 namespace StackOverblow.Controllers;
@@ -29,11 +30,13 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    public async IActionResult Index(string researchText)
+    [HttpPost]
+    public async Task<IActionResult> Index(string researchText)
     {
         if (researchText.Length == 0)
             return View();
 
-        return View();
+        var researchModel = new ResearchModel(researchText);
+        return View(researchModel);
     }
 }
