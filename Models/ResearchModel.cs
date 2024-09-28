@@ -1,3 +1,18 @@
-﻿namespace stackoverblow.Models;
+﻿using StackOverblowApp.Models;
+using System.Collections.Generic;
 
-public record class ResearchModel(string ResearchText);
+namespace stackoverblow.Models;
+
+public class ResearchModel
+{
+    public IReadOnlyCollection<ResearchQuestionModel> Questions;
+    public readonly string ResearchString;
+    public ResearchModel(string researchText)
+    {
+        ResearchString = researchText;
+        var list = new List<ResearchQuestionModel>();
+        
+        FindRelevantQuestionService
+
+    }
+}

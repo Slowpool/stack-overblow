@@ -34,12 +34,12 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Index(string researchText)
+    public async Task<IActionResult> Index(string q)
     {
-        if (researchText.Length == 0)
+        if (q.Length == 0)
             return View();
 
-        var researchModel = new ResearchModel(researchText);
+        var researchModel = new ResearchModel(q);
         return View(researchModel);
     }
 }
