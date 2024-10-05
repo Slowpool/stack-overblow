@@ -20,3 +20,27 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+div.inline {
+    float: left;
+}
+
+div.user-info {
+    margin-left: 
+}
+
+hr.bold {
+    height: 4px;
+}
+
+hr.narrow {
+    height: 2px;
+}
+
+b.question-title {
+    font-size: 20px;
+}
+
+span.question-content {
+    font-size: 14px;
+}

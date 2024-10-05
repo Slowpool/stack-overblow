@@ -1,0 +1,57 @@
+﻿@using StackOverblowApp.Models
+@using ServiceLayer
+@using Humanizer
+
+@model ResearchModel;
+
+<h3>Results</h3>
+<div>
+    <b>@Model.ResultsCount results</b>
+    <input type="radio" value="@nameof(QuestionsOrderBy.Relevance)"
+        @(Model.OrderBy == QuestionsOrderBy.Relevance ? "checked" : "")>
+        @nameof(QuestionsOrderBy.Relevance)
+    <input type="radio" value="@nameof(QuestionsOrderBy.Newest)"
+        @(Model.OrderBy == QuestionsOrderBy.Newest ? "checked" : "")>
+        @nameof(QuestionsOrderBy.Newest)
+    <input type="radio" value="@nameof(QuestionsOrderBy.Active)"
+        @(Model.OrderBy == QuestionsOrderBy.Active ? "checked" : "")>
+        @nameof(QuestionsOrderBy.Active)
+    <input type="radio" value="@nameof(QuestionsOrderBy.Score)"
+        @(Model.OrderBy == QuestionsOrderBy.Score ? "checked" : "")>
+        @nameof(QuestionsOrderBy.Score)
+    <hr class="bold"/>
+</div>
+
+
+@foreach (var question in Model.Questions)
+{
+    <div>
+        <div class="inline">
+            @question.VoteCount votes
+            <br />
+            @question.AnswersCount answers
+            <br />
+            @question.ViewsCount views
+        </div>
+        <div>
+            <b class="question-title">@question.Title</b>
+            <br />
+            <span class="question-content">
+                @(question.Content.Length > 50 ? question.Content.Substring(0, 50) + ".." : question.Content)
+            </span>
+            <br />
+            @foreach(var tag in question.Tags)
+            {
+                <a>@tag.Name</a>
+            }
+            <br />
+            <div class="user-info">
+                @question.AskingUserPicture.Substring(0, 1)
+                <a>@question.AuthorNickname</a>
+                @question.AuthorReputation
+                asked @question.AskedAt <!--.Humanize()-->
+            </div>
+        </div>
+    </div>
+    <hr class="narrow" />
+}

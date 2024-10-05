@@ -1,5 +1,6 @@
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Environment.EnvironmentName = "Development";
@@ -8,10 +9,13 @@ builder.Environment.EnvironmentName = "Development";
 builder.Services.AddControllersWithViews();
 
 string connectionString = builder.Configuration.GetConnectionString("Development")!;
-builder.Services.AddDbContextFactory<AppDbContext>(options =>
-    options.UseSqlite(connectionString));
-
-
+//builder.Services.AddTransient(services =>
+//{
+//    var options = new DbContextOptionsBuilder();
+//    options.UseSqlServer(connectionString);
+//    return new AppDbContext(options.Options, false);
+//});
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

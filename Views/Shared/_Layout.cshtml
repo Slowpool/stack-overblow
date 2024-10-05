@@ -29,9 +29,7 @@
                             <a class="nav-link text-dark" href="#">OverblowAI</a>
                         </li>
                         <li>
-                            <form asp-action="Research" method="get">
-                                <input type="text" name="researchText" action="submit" />
-                            </form>
+                            @Html.Partial("PartialSearchLine")
                         </li>
                     </ul>
                 </div>

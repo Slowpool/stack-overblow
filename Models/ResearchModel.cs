@@ -1,18 +1,14 @@
-﻿using StackOverblowApp.Models;
+﻿using DataLayer;
+using ServiceLayer;
 using System.Collections.Generic;
 
-namespace stackoverblow.Models;
+namespace StackOverblowApp.Models;
 
 public class ResearchModel
 {
-    public IReadOnlyCollection<ResearchQuestionModel> Questions;
-    public readonly string ResearchString;
-    public ResearchModel(string researchText)
-    {
-        ResearchString = researchText;
-        var list = new List<ResearchQuestionModel>();
-        
-        FindRelevantQuestionService
-
-    }
+    public IReadOnlyCollection<ResearchQuestionModel> Questions { get; init; }
+    public string ResearchText { get; init; }
+    public int PageNumber { get; init; }
+    public int ResultsCount { get; init; }
+    public QuestionsOrderBy OrderBy { get; init; }
 }

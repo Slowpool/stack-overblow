@@ -1,4 +1,4 @@
-namespace StackOverblow.Models;
+namespace StackOverblowApp.Models;
 
 public class ErrorViewModel
 {
