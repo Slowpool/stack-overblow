@@ -1,3 +1,5 @@
 ﻿<form asp-action="Search" method="get">
-    <input type="text" name="researchText" action="submit" />
+    <input type="text" name="researchText" action="submit" placeholder="Find..." autocomplete="off" 
+    value="@(ViewBag.LayoutModel != null ? ViewBag.LayoutModel.ResearchText : string.Empty)"
+    @* value="@(ViewData["LayoutModel"] != null ? (ViewData["LayoutModel"] as LayoutModel)!.ResearchText : string.Empty)"*@ />
 </form>

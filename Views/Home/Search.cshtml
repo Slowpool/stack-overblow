@@ -7,18 +7,20 @@
 <h3>Results</h3>
 <div>
     <b>@Model.ResultsCount results</b>
-    <input type="radio" value="@nameof(QuestionsOrderBy.Relevance)"
+    <div class="order-by">
+    <input type="radio" value="@nameof(QuestionsOrderBy.Relevance)" name="order-by"
         @(Model.OrderBy == QuestionsOrderBy.Relevance ? "checked" : "")>
         @nameof(QuestionsOrderBy.Relevance)
-    <input type="radio" value="@nameof(QuestionsOrderBy.Newest)"
+    <input type="radio" value="@nameof(QuestionsOrderBy.Newest)" name="order-by"
         @(Model.OrderBy == QuestionsOrderBy.Newest ? "checked" : "")>
         @nameof(QuestionsOrderBy.Newest)
-    <input type="radio" value="@nameof(QuestionsOrderBy.Active)"
+    <input type="radio" value="@nameof(QuestionsOrderBy.Active)" name="order-by"
         @(Model.OrderBy == QuestionsOrderBy.Active ? "checked" : "")>
         @nameof(QuestionsOrderBy.Active)
-    <input type="radio" value="@nameof(QuestionsOrderBy.Score)"
+    <input type="radio" value="@nameof(QuestionsOrderBy.Score)" name="order-by"
         @(Model.OrderBy == QuestionsOrderBy.Score ? "checked" : "")>
         @nameof(QuestionsOrderBy.Score)
+    </div>
     <hr class="bold"/>
 </div>
 
@@ -26,7 +28,7 @@
 @foreach (var question in Model.Questions)
 {
     <div>
-        <div class="inline">
+        <div class="question-stats">
             @question.VoteCount votes
             <br />
             @question.AnswersCount answers
@@ -40,18 +42,23 @@
                 @(question.Content.Length > 50 ? question.Content.Substring(0, 50) + ".." : question.Content)
             </span>
             <br />
-            @foreach(var tag in question.Tags)
+            @if (question.Tags.Count != 0)
             {
-                <a>@tag.Name</a>
+                <div class="tags">
+                @foreach (var tag in question.Tags)
+                {
+                    <a href="something">@tag.Name</a>
+                }
+                </div>
             }
-            <br />
             <div class="user-info">
-                @question.AskingUserPicture.Substring(0, 1)
-                <a>@question.AuthorNickname</a>
-                @question.AuthorReputation
-                asked @question.AskedAt <!--.Humanize()-->
+                pic <!-- @question.AskingUserPicture.Substring(0, 1) -->
+                <a class="user-mini-nickname" @(question.AuthorId != 0 ? $"href=/users/{question.AuthorId}" : "")>@question.AuthorNickname</a>
+                <span class="user-mini-score">@question.AuthorReputation</span>
+                asked @question.AskedAt.ToString(@"MMM M, yyyy a\t H:mm")
             </div>
         </div>
     </div>
-    <hr class="narrow" />
+    <br />
+    <hr class="narrow"/>
 }

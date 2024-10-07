@@ -36,11 +36,17 @@ public class HomeController : Controller
     }
 
     [HttpGet(template: "/search", Name = "GetQuestions")]
-    // https://localhost:7296/search?q=nice&page=1&orderBy=Newest
-    public async Task<IActionResult> Search([FromQuery] int page, [FromQuery] string q, [FromQuery] string orderBy)
+    public async Task<IActionResult> Search(string? researchText, [FromQuery] string q, [FromQuery] string orderBy=nameof(QuestionsOrderBy.Relevance), [FromQuery] int page = 1)
     {
+        if (researchText != null)
+        {
+            return RedirectToAction("Search", new RouteValueDictionary(new { q = researchText }));
+        }
+
         if (q.Length == 0)
             return View();
+
+        ViewBag.LayoutModel = new LayoutModel { ResearchText = q };
 
         if (!Enum.TryParse(orderBy, true, out QuestionsOrderBy orderByOption))
         {
@@ -55,6 +61,7 @@ public class HomeController : Controller
         string authorAvatar;
         string authorNickname;
         int authorReputation;
+        int authorId;
         foreach (var question in questions)
         {
             if (question.AskingUser != null)
@@ -62,12 +69,14 @@ public class HomeController : Controller
                 authorAvatar = question.AskingUser.Avatar;
                 authorNickname = question.AskingUser.Nickname;
                 authorReputation = question.AskingUser.Reputation;
+                authorId = question.AskingUser.UserProfileId;
             }
             else
             {
                 authorAvatar = "default pic";
                 authorNickname = "deleted";
                 authorReputation = 0;
+                authorId = 0;
             }
 
             questionsModel.Add(new ResearchQuestionModel
@@ -80,7 +89,8 @@ public class HomeController : Controller
                 AskingUserPicture: authorAvatar,
                 AuthorNickname: authorNickname,
                 AuthorReputation: authorReputation,
-                AskedAt: question.PostedAt));
+                AskedAt: question.PostedAt,
+                AuthorId: authorId));
         }
 
         var researchModel = new ResearchModel
