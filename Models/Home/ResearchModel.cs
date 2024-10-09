@@ -2,7 +2,7 @@
 using ServiceLayer;
 using System.Collections.Generic;
 
-namespace StackOverblowApp.Models;
+namespace StackOverblowApp.Models.Home;
 
 public class ResearchModel
 {

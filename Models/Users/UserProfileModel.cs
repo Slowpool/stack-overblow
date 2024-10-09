@@ -1,4 +1,4 @@
-﻿namespace StackOverblowApp.Models;
+﻿namespace StackOverblowApp.Models.Users;
 
 public class UserProfileModel
 {

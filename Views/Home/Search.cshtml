@@ -1,8 +1,9 @@
-﻿@using StackOverblowApp.Models
+﻿@using StackOverblowApp.Models.Home
 @using ServiceLayer
 @using Humanizer
 
 @model ResearchModel;
+@inject LinkGenerator linkGenerator
 
 <h3>Results</h3>
 <div>
@@ -36,7 +37,10 @@
             @question.ViewsCount views
         </div>
         <div>
-            <b class="question-title">@question.Title</b>
+            <h2>
+                @#error
+                <a class="ordinary-text" href="@linkGenerator.GetPathByRouteValues(routeName: "/questions", new { id = question.QuestionId})">@question.Title</a>
+            </h2>
             <br />
             <span class="question-content">
                 @(question.Content.Length > 50 ? question.Content.Substring(0, 50) + ".." : question.Content)
@@ -52,7 +56,7 @@
                 </div>
             }
             <div class="user-info">
-                pic <!-- @question.AskingUserPicture.Substring(0, 1) -->
+                pic
                 <a class="user-mini-nickname" @(question.AuthorId != 0 ? $"href=/users/{question.AuthorId}" : "")>@question.AuthorNickname</a>
                 <span class="user-mini-score">@question.AuthorReputation</span>
                 asked @question.AskedAt.ToString(@"MMM M, yyyy a\t H:mm")

@@ -1,0 +1,25 @@
+﻿@using StackOverblowApp.Models.Questions
+@using Humanizer
+@model QuestionModel
+@inject LinkGenerator linkGenerator
+
+<div>
+    <h2 class="question-title">@Model.Title</h2>
+    <div class="ask-question">
+        <a href="@linkGenerator.GetPathByAction(action: "ask", controller: "questions")"></a>Ask question
+    </div>
+    <div>
+        <div>
+            Asked
+            <time datetime="@Model.AskedAt.ToString()">@Model.AskedAt.Humanize()</time>
+        </div>
+        <div>
+            Modified
+            <time datetime="@Model.LastModified.ToString()">@Model.LastModified.Humanize()</time>
+        </div>
+        <div>
+            Viewed
+            @Model.ViewsCount times
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 ﻿using DataLayer;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer;
-using StackOverblowApp.Models;
+using StackOverblowApp.Models.Users;
 
 namespace StackOverblowApp.Controllers;
 public class UsersController : Controller
@@ -32,7 +32,7 @@ public class UsersController : Controller
         {
             Nickname = userProfile.Nickname,
             AnswersCount = userProfile.Answers.Count,
-            Country = userProfile.Country?.ToString(),
+            Country = userProfile.Country?.Name,
             Description = userProfile.Description,
             LastSeen = userProfile.LastSeen,
             Link = userProfile.Link,

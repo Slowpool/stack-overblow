@@ -41,18 +41,22 @@ div.question-content {
     font-size: 14px;
 }
 
-div.picture, img.profile-avatar {
-    width: 150px;
-    height: 150px;
-}
-
 div.profile-main-info {
     margin-left: 30px;
-    height: 150px;
+    height: 50px;
+}
+
+div.picture {
+    vertical-align: top;
 }
 
 span.user-mini-score {
     font-weight: bold;
+}
+
+img.profile-avatar {
+    width: 150px;
+    height: 150px;
 }
 
 hr.bold {
@@ -67,6 +71,14 @@ b.question-title {
     font-size: 20px;
 }
 
-a.user-mini-nickname {
+a.user-mini-nickname, a.ordinary-text {
     text-decoration: none;
+}
+
+h2.question-title {
+    float: left;
+}
+
+div.ask-question {
+    float: right;
 }

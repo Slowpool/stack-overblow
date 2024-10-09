@@ -1,10 +1,12 @@
 using System.Diagnostics;
+using CommonFunctions;
 using DataLayer;
 using DataLayer.DomainModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceLayer;
 using StackOverblowApp.Models;
+using StackOverblowApp.Models.Home;
 
 namespace StackOverblowApp.Controllers;
 
@@ -35,14 +37,9 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    [HttpGet(template: "/search", Name = "GetQuestions")]
-    public async Task<IActionResult> Search(string? researchText, [FromQuery] string q, [FromQuery] string orderBy=nameof(QuestionsOrderBy.Relevance), [FromQuery] int page = 1)
+    [HttpGet(template: "/search", Name = "QuestionsSearch")]
+    public async Task<IActionResult> Search([FromQuery] string q, [FromQuery] string orderBy=nameof(QuestionsOrderBy.Relevance), [FromQuery] int page = 1)
     {
-        if (researchText != null)
-        {
-            return RedirectToAction("Search", new RouteValueDictionary(new { q = researchText }));
-        }
-
         if (q.Length == 0)
             return View();
 
@@ -55,7 +52,7 @@ public class HomeController : Controller
 
         var options = new QuestionResearchOptions(orderByOption, page);
         var service = new QuestionService(_context);
-        var questions = service.FindQuestions(q, options);
+        var questions = service.GetQuestions(q, options);
 
         var questionsModel = new List<ResearchQuestionModel>();
         string authorAvatar;
@@ -74,13 +71,14 @@ public class HomeController : Controller
             else
             {
                 authorAvatar = "default pic";
-                authorNickname = "deleted";
+                authorNickname = ConstNames.DeletedUser;
                 authorReputation = 0;
                 authorId = 0;
             }
 
             questionsModel.Add(new ResearchQuestionModel
-                (VoteCount: question.VoteCount,
+                (QuestionId: question.QuestionId,
+                VoteCount: question.VoteCount,
                 AnswersCount: question.Answers.Count,
                 ViewsCount: question.Views,
                 Title: question.Title,
