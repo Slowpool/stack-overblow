@@ -15,7 +15,7 @@ public class QuestionsController : Controller
         this.context = context;
     }
 
-    [HttpGet(template: "/questions/{questionId:int}", Name = "SpecificQuestions")]
+    //[HttpGet(template: "/questions/{questionId:int}", Name = "questions")]
     public IActionResult Index(int questionId)
     {
         var service = new QuestionService(context);

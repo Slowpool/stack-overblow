@@ -35,11 +35,18 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "main",
+    pattern: "{controller=Home}/{action=Index}/{id:int?}");
 
 app.MapControllerRoute(
     name: "users",
-    pattern: "{controller=Users}/{action=Index}/{id?}");
+    pattern: "{controller=Users}/{action=Index}/{id:int?}");
+
+// further stuff is equal to [HttpGetAttribute(template: "/questions/{questionId:int}", Name = "questions")] for QuestionsController.Index(int questionId)
+app.MapControllerRoute(
+    name: "questions",
+    pattern: "questions/{questionId:int}",
+    defaults: new { controller = "Questions", action = "Index" }
+    );
 
 app.Run();
